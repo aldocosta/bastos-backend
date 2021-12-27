@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Users } from '../users/entity/users.entity';
 import { GastosDTO } from './dto/gastos.dto';
 import { GastosRepository } from './entity/gastos.repository';
 
@@ -12,5 +13,10 @@ export class GastosService {
 
     async update(gasto: GastosDTO) {
         return await this.repo.update(gasto.id, gasto)
+    }
+
+    async find(userid: string) {
+        return await this.repo.
+            find({ where: { user: userid } })
     }
 }
