@@ -1,4 +1,5 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { GastosDTO } from './dto/gastos.dto';
 import { GastosService } from './gastos.service';
 
@@ -8,6 +9,7 @@ export class GastosController {
     constructor(private readonly svc: GastosService) { }
 
     @Post()
+    @UseGuards(JwtAuthGuard)
     async create(
         @Body() gastos: GastosDTO) {
         try {
@@ -18,6 +20,7 @@ export class GastosController {
     }
 
     @Get(':userid')
+    @UseGuards(JwtAuthGuard)
     async findGastosByUserId(
         @Param('userid') userid:string) {
         try {

@@ -5,9 +5,10 @@ import * as path from 'path';
 import * as Config from 'nestjs-config';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from './modules/users/entity/users.entity';
-import { UsersModule } from './modules/users/users.module';
+import { UserModule } from './modules/users/users.module';
 import { GastosModule } from './modules/gastos/gastos.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -18,8 +19,10 @@ import { GastosModule } from './modules/gastos/gastos.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(),  
-    UsersModule,
-    GastosModule
+    UserModule,
+    GastosModule,
+    AuthModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
