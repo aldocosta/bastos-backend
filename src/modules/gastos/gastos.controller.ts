@@ -1,4 +1,4 @@
-import { Body, Controller, DefaultValuePipe, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { GastosDTO } from './dto/gastos.dto';
 import { GastosService } from './gastos.service';
@@ -28,6 +28,17 @@ export class GastosController {
         try {
             gastos.id = id
             return await this.svc.update(gastos)
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @Delete(':id')
+    @UseGuards(JwtAuthGuard)
+    async delete(
+        @Param('id') id: string) {
+        try {            
+            return await this.svc.delete(id)
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }

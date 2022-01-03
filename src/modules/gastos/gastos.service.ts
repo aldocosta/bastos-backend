@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { GastosDTO } from './dto/gastos.dto';
 import { GastosRepository } from './entity/gastos.repository';
 import {
@@ -18,8 +18,12 @@ export class GastosService {
 
     async update(gasto: GastosDTO) {
         const id = gasto.id
-        delete gasto.id
+        delete gasto.id    
         return await this.repo.update(id, gasto)
+    }
+
+    async delete(id: string) {                
+        return await this.repo.delete(id)
     }
 
     async find(userid: string) {
