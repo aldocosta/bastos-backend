@@ -17,7 +17,9 @@ export class GastosService {
     }
 
     async update(gasto: GastosDTO) {
-        return await this.repo.update(gasto.id, gasto)
+        const id = gasto.id
+        delete gasto.id
+        return await this.repo.update(id, gasto)
     }
 
     async find(userid: string) {

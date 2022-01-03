@@ -7,8 +7,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersLoginRepository } from './users.repository';
+// import { TypeOrmModule } from '@nestjs/typeorm';
+// import { UsersLoginRepository } from './users.repository';
 
 @Module({
   imports: [

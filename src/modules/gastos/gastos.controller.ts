@@ -1,4 +1,4 @@
-import { Body, Controller, DefaultValuePipe, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { GastosDTO } from './dto/gastos.dto';
 import { GastosService } from './gastos.service';
@@ -20,6 +20,19 @@ export class GastosController {
         }
     }
 
+    @Put(':id')
+    @UseGuards(JwtAuthGuard)
+    async update(
+        @Param('id') id: string,
+        @Body() gastos: GastosDTO) {
+        try {
+            gastos.id = id
+            return await this.svc.update(gastos)
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
     @Get(':userid')
     @UseGuards(JwtAuthGuard)
     async findGastosByUserId(
@@ -32,6 +45,7 @@ export class GastosController {
     }
 
     @Get('')
+    @UseGuards(JwtAuthGuard)
     async index(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
         @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
