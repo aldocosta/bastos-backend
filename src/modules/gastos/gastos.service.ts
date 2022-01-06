@@ -18,17 +18,22 @@ export class GastosService {
 
     async update(gasto: GastosDTO) {
         const id = gasto.id
-        delete gasto.id    
+        delete gasto.id
         return await this.repo.update(id, gasto)
     }
 
-    async delete(id: string) {                
+    async delete(id: string) {
         return await this.repo.delete(id)
     }
 
-    async find(userid: string) {
+    async findByUserId(userid: string) {
         return await this.repo.
             find({ where: { user: userid } })
+    }
+
+    async findByUserIdCardId(userid: string, id: string) {
+        return await this.repo.
+            find({ where: { user: userid, id: id } })
     }
 
     async paginate(options: IPaginationOptions, userid: string): Promise<Pagination<GastosDTO>> {

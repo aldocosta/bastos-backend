@@ -37,7 +37,7 @@ export class GastosController {
     @UseGuards(JwtAuthGuard)
     async delete(
         @Param('id') id: string) {
-        try {            
+        try {
             return await this.svc.delete(id)
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
@@ -49,7 +49,20 @@ export class GastosController {
     async findGastosByUserId(
         @Param('userid') userid: string) {
         try {
-            return await this.svc.find(userid)
+            return await this.svc.findByUserId(userid)
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @Get(':userid/:id')
+    @UseGuards(JwtAuthGuard)
+    async findByUserIdCardId(
+        @Param('userid') userid: string,
+        @Param('id') id: string
+    ) {
+        try {
+            return await this.svc.findByUserIdCardId(userid, id)
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
