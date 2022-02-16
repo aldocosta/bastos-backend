@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { LancamentoService } from './lancamento.service';
 import { LancamentoController } from './lancamento.controller';
-import { LancamentoRepository } from './entity/gastos.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Lancamento } from './entity/lancamento.entity';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([LancamentoRepository])],
+    TypeOrmModule.forFeature([Lancamento])],
   providers: [LancamentoService],
   controllers: [LancamentoController]
 })

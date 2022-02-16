@@ -5,7 +5,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 export class Lancamento {
 
   @PrimaryGeneratedColumn({ name: 'id' })
-  public id: string;
+  public id: number;
 
   @Column({ name: 'nm_lancamento_gasto' })
   public nm_lancamento_gasto: string;
