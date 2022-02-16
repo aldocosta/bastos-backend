@@ -1,8 +1,7 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Req, UseGuards, ValidationPipe } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import { UsersDTO } from './dto/users.dto';
 import { UsersUpdateDTO } from './dto/users.update.dto';
-import { UsersRepository } from './entity/users.repository';
 import { UsersService } from './users.service';
 
 @Controller('users/v1')

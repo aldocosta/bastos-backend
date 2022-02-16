@@ -1,5 +1,6 @@
 import { Users } from '../../users/entity/users.entity';
-import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Lancamento } from 'src/modules/lancamento/entity/lancamento.entity';
 
 
 @Entity('Gastos')
@@ -19,4 +20,7 @@ export class Gastos {
 
   @ManyToOne(() => Users, user => user.gastos)
   user: Users
+
+  @OneToMany(()=> Lancamento, lancamentos => lancamentos.gasto)
+  lancamentos: Lancamento[]
 }

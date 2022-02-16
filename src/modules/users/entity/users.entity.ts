@@ -1,7 +1,6 @@
 import { Gastos } from 'src/modules/gastos/entity/gastos.entity';
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-
 @Entity('Users')
 export class Users {
 
