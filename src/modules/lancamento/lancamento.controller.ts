@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Pagination } from 'nestjs-typeorm-paginate';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LancamentoDTO } from './dto/lancamento.dto';
 import { LancamentoService } from './lancamento.service';
 
-@Controller('lancamento/v1')
+@Controller('lancamentos/v1')
 export class LancamentoController {
 
     constructor(private readonly svc: LancamentoService) { }
@@ -43,5 +45,21 @@ export class LancamentoController {
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
         }
-    }    
+    } 
+    
+    
+    @Get('')
+    //@UseGuards(JwtAuthGuard)
+    async index(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+        @Query('gastoid') gastoid
+    ): Promise<Pagination<LancamentoDTO>> {
+        limit = limit > 100 ? 100 : limit;
+        return this.svc.paginate({
+            page,
+            limit,
+            route: '/lancamentos/v1?gastoid=' + gastoid,
+        }, gastoid);
+    }
 }
